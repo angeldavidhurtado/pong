@@ -4,5 +4,4 @@ Mientras aprendía a trabajar con Canvas en JavaScript, quise llevar a cabo un p
 
 Este fue mi primer juego hecho con Canvas y JavaScript, y lo desarrollé desde cero. Es sencillo, retro y totalmente funcional.
 
-👉 ¡Haz clic para jugar y revivir un clásico!
-angeldavidhurtado.github.io/pong/
+👉 [¡Haz clic para jugar y revivir un clásico!](https://angeldavidhurtado.github.io/pong/)
