@@ -6,9 +6,13 @@ export default class Ball {
 		this.height = height
 		this.x = this.game.width / 2 - this.width / 2
 		this.y = this.game.height / 2 - this.height / 2
-		this.speed = speed
-		this.speedX = speed
-		this.speedY = speed
+
+		this.initialDividendSpeed = 255
+		this.initialSpeed = window.innerWidth / this.initialDividendSpeed
+		this.dividendSpeed = this.initialDividendSpeed
+		this.speed = this.initialSpeed
+		this.speedX = this.speed
+		this.speedY = this.speed
 
 		this.PlayerLeft = collisions.Left
 		this.PlayerRight = collisions.Right
@@ -38,21 +42,42 @@ export default class Ball {
 			// collision with player on the left
 			if (!(this.x < this.PlayerLeft.x))
 				if (this.y + this.height >= this.PlayerLeft.y)
-					if (this.y <= this.PlayerLeft.y + this.PlayerLeft.height)
+					if (this.y <= this.PlayerLeft.y + this.PlayerLeft.height) {
+						this.increaseSpeed()
 						this.speedX = this.speed
+					}
 		} else if (this.x + this.width >= this.PlayerRight.x) {
 			// collision with player on the Right
 			if (!(this.x + this.width > this.PlayerRight.x + this.PlayerRight.width))
 				if (this.y + this.height >= this.PlayerRight.y)
-					if (this.y <= this.PlayerRight.y + this.PlayerRight.height)
+					if (this.y <= this.PlayerRight.y + this.PlayerRight.height) {
+						this.increaseSpeed()
 						this.speedX = -this.speed
+					}
 		}
 
-		if (this.x + this.width < 0)
+		if (this.x + this.width < 0) {
+			this.resetSpeed()
 			return 'Right'
-		else if (this.x > this.game.width)
+		} else if (this.x > this.game.width) {
+			this.resetSpeed()
 			return 'Left'
-		return
+		} return
+	}
+
+
+	increaseSpeed = () => {
+		this.dividendSpeed -= 25
+		if (this.dividendSpeed < 80) this.dividendSpeed = 80
+		this.speed = window.innerWidth / this.dividendSpeed
+	}
+
+
+	resetSpeed = () => {
+		this.dividendSpeed = this.initialDividendSpeed
+		this.speed = this.initialSpeed
+		this.speedX = this.speed
+		this.speedY = this.speed
 	}
 
 
