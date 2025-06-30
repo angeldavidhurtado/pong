@@ -23,20 +23,6 @@ export default class Ball {
 			this.width,
 			this.height
 		)
-
-
-		// draw the circular ball
-		/*
-		this.ctx.beginPath()
-		this.ctx.arc(
-			this.x,
-			this.y,
-			10,
-			0,
-			2 * Math.PI
-		)
-		this.ctx.fill()
-		*/
 	}
 
 
@@ -44,19 +30,10 @@ export default class Ball {
 		this.x += this.speedX
 		this.y += this.speedY
 
-		/*
-		if (this.x <= 0)
-			return console.log('Point Player Right')
-		else if (this.x + this.width >= this.game.width)
-			return console.log('Point Player Left')
-		*/
-
 		if (this.y <= 0)
-			// bounce down
-			this.speedY *= -1
+			this.speedY *= -1 // bounce down
 		else if (this.y + this.height >= this.game.height)
-			// bounce up
-			this.speedY *= -1 
+			this.speedY *= -1 // bounce up
 		else if (this.x <= this.PlayerLeft.x + this.PlayerLeft.width) {
 			// collision with player on the left
 			if (!(this.x < this.PlayerLeft.x))

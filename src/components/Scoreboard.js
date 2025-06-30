@@ -9,6 +9,14 @@ export default class Scoreboard {
 		this.ctx = context
 		this.ctx.font = '30px "Press Start 2P", sans-serif';
 		this.y = 80
+
+		window.addEventListener('resize', this.onResize)
+	}
+
+
+	onResize = () => {
+		this.ctx.font = '30px "Press Start 2P", sans-serif'
+		this.calculateCoordinateXMarkers()
 	}
 
 
