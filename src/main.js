@@ -9,7 +9,7 @@ class Game_Pong {
 		this.ctx = this.game.getContext('2d')
 
 		// Canvas size and event to adjust its size
-		
+
 		this.adjustGameSize()
 		window.addEventListener('resize', () => {
 			this.adjustGameSize()
@@ -17,6 +17,7 @@ class Game_Pong {
 			// La altura de las paletas deberia ser como un porcentaje de la altura del canvas
 			// La posicion de las paletas deberia ser un porcentaje de la altura del canvas para que al redimencionar siga estando en ese porcentaje
 			// Se puede guardar el valor inicial del camvas para tener contancia de cual era y actualizarlo ya cuando se ejecute el evento de resize
+			this.renderGameState()
 		})
 
 		this.KeysPressed = {}
@@ -86,8 +87,10 @@ class Game_Pong {
 		}
 
 		this.Scoreboard.updateScoreboard()
-		this.centerRestart()
+		if (!(this.Players.Left.score == 3 || this.Players.Right.score == 3))
+			this.centerRestart()
 	}
+
 
 	centerRestart = () => {
 		this.Ball.reset()
@@ -109,22 +112,32 @@ class Game_Pong {
 	gameLoop = async () => {
 		this.handleInput() // Capturar la entrada del usuario
 		this.updateGameState() // Actualizar el estado del juego
-		this.renderGameState() // Renderizar el estado del juego
 		await this.gameWinningMessage()
+		this.renderGameState() // Renderizar el estado del juego
 		requestAnimationFrame(this.gameLoop)
 	}
 
 
 	gameWinningMessage = async () => {
 		if (this.Players.Left.score == 3) {
-			console.log('Ganador: jugador de la izquierda')
+			this.drawMultilineText(
+				'Ganador\nJugador de\nla Izquierda',
+				this.game.width / 2,
+				this.game.height / 2
+			)
 			await this.sleep(5)
+			this.centerRestart()
 			this.Players.Left.score = 0
 			this.Players.Right.score = 0
 			this.Scoreboard.updateScoreboard()
 		} else if (this.Players.Right.score == 3) {
-			console.log('Ganador: jugador de la derecha')
+			this.drawMultilineText(
+				'Ganador\nJugador de\nla Derecha',
+				this.game.width / 2,
+				this.game.height / 2
+			)
 			await this.sleep(5)
+			this.centerRestart()
 			this.Players.Left.score = 0
 			this.Players.Right.score = 0
 			this.Scoreboard.updateScoreboard()
@@ -133,6 +146,16 @@ class Game_Pong {
 
 
 	sleep = () => new Promise(res => setTimeout(res, 5000))
+
+
+	drawMultilineText = (text, x, y, lineHeight = 40) => {
+		this.ctx.font = '30px "Press Start 2P", sans-serif'
+		this.ctx.textAlign = 'center'
+		const lines = text.split('\n')
+		lines.forEach((line, index) => {
+			this.ctx.fillText(line, x, y + (index * lineHeight))
+		})
+	}
 
 
 	adjustGameSize = () => {
