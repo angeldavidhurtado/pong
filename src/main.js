@@ -51,7 +51,7 @@ class Game_Pong {
 		}
 
 		// Create ball
-		this.Ball = new Ball(this.game, this.ctx, 10, 10, 3, this.Players)
+		this.Ball = new Ball(this.game, this.ctx, 10, 10, this.Players)
 
 		// Create scoreboard
 		this.Scoreboard = new Scoreboard(this.game, this.ctx, this.Players.Left, this.Players.Right)
@@ -89,7 +89,6 @@ class Game_Pong {
 		this.centerRestart()
 	}
 
-
 	centerRestart = () => {
 		this.Ball.reset()
 		this.Players.Left.resetPosition()
@@ -107,13 +106,33 @@ class Game_Pong {
 	}
 
 
-	gameLoop = () => {
+	gameLoop = async () => {
 		this.handleInput() // Capturar la entrada del usuario
-		this.updateGameState(); // Actualizar el estado del juego
+		this.updateGameState() // Actualizar el estado del juego
 		this.renderGameState() // Renderizar el estado del juego
-
+		await this.gameWinningMessage()
 		requestAnimationFrame(this.gameLoop)
 	}
+
+
+	gameWinningMessage = async () => {
+		if (this.Players.Left.score == 3) {
+			console.log('Ganador: jugador de la izquierda')
+			await this.sleep(5)
+			this.Players.Left.score = 0
+			this.Players.Right.score = 0
+			this.Scoreboard.updateScoreboard()
+		} else if (this.Players.Right.score == 3) {
+			console.log('Ganador: jugador de la derecha')
+			await this.sleep(5)
+			this.Players.Left.score = 0
+			this.Players.Right.score = 0
+			this.Scoreboard.updateScoreboard()
+		}
+	}
+
+
+	sleep = () => new Promise(res => setTimeout(res, 5000))
 
 
 	adjustGameSize = () => {

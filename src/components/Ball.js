@@ -1,5 +1,5 @@
 export default class Ball {
-	constructor(game, ctx, width, height, speed=1, collisions) {
+	constructor(game, ctx, width, height, collisions) {
 		this.game = game
 		this.ctx = ctx
 		this.width = width
@@ -75,7 +75,7 @@ export default class Ball {
 
 	resetSpeed = () => {
 		this.dividendSpeed = this.initialDividendSpeed
-		this.speed = this.initialSpeed
+		this.speed = window.innerWidth / this.dividendSpeed
 		this.speedX = this.speed
 		this.speedY = this.speed
 	}
