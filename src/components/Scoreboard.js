@@ -52,8 +52,8 @@ export default class Scoreboard {
 
 	render = () => {
 		this.ctx.font = '30px "Press Start 2P", sans-serif'
-		this.ctx.fillText(this.points_player_left, this.player_left_x, this.y)
-		this.ctx.fillText(this.points_player_right, this.player_right_x, this.y)
+		this.ctx.fillText(this.player_left.score, this.player_left_x, this.y)
+		this.ctx.fillText(this.player_right.score, this.player_right_x, this.y)
 	}
 }
 

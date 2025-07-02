@@ -92,6 +92,9 @@ class Game_Pong {
 	}
 
 
+	sleep = () => new Promise(res => setTimeout(res, 5000))
+
+
 	centerRestart = () => {
 		this.Ball.reset()
 		this.Players.Left.resetPosition()
@@ -112,48 +115,37 @@ class Game_Pong {
 	gameLoop = async () => {
 		this.handleInput() // Capturar la entrada del usuario
 		this.updateGameState() // Actualizar el estado del juego
-		await this.gameWinningMessage()
 		this.renderGameState() // Renderizar el estado del juego
+		if (this.Players.Left.score == 3 || this.Players.Right.score == 3) {
+			this.gameWinningMessage()
+			await this.sleep()
+			this.centerRestart()
+			this.Players.Left.score = 0
+			this.Players.Right.score = 0
+			this.renderGameState()
+		}
 		requestAnimationFrame(this.gameLoop)
 	}
 
 
-	gameWinningMessage = async () => {
-		if (this.Players.Left.score == 3) {
-			this.drawMultilineText(
-				'Ganador\nJugador de\nla Izquierda',
-				this.game.width / 2,
-				this.game.height / 2
-			)
-			await this.sleep(5)
-			this.centerRestart()
-			this.Players.Left.score = 0
-			this.Players.Right.score = 0
-			this.Scoreboard.updateScoreboard()
-		} else if (this.Players.Right.score == 3) {
-			this.drawMultilineText(
-				'Ganador\nJugador de\nla Derecha',
-				this.game.width / 2,
-				this.game.height / 2
-			)
-			await this.sleep(5)
-			this.centerRestart()
-			this.Players.Left.score = 0
-			this.Players.Right.score = 0
-			this.Scoreboard.updateScoreboard()
-		}
+	gameWinningMessage = () => {
+		if (this.Players.Left.score == 3)
+			this.drawMultilineText('Ganador\nJugador de\nla Izquierda')
+		else if (this.Players.Right.score == 3)
+			this.drawMultilineText('Ganador\nJugador de\nla Derecha')
 	}
 
 
-	sleep = () => new Promise(res => setTimeout(res, 5000))
-
-
-	drawMultilineText = (text, x, y, lineHeight = 40) => {
+	drawMultilineText = (text, lineHeight = 40) => {
 		this.ctx.font = '30px "Press Start 2P", sans-serif'
 		this.ctx.textAlign = 'center'
 		const lines = text.split('\n')
 		lines.forEach((line, index) => {
-			this.ctx.fillText(line, x, y + (index * lineHeight))
+			this.ctx.fillText(
+				line,
+				this.game.width / 2, // x
+				this.game.height / 2 + (index * lineHeight) - 20 // y
+			)
 		})
 	}
 
