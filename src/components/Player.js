@@ -4,6 +4,7 @@ export default class Player {
 		this.ctx = ctx
 		this.width = 12
 		this.height = 100
+		this.initial_y = y
 		this.y_start = y - this.height / 2
 		this.x = x
 		this.y = this.y_start
@@ -34,6 +35,6 @@ export default class Player {
 
 
 	resetPosition = () => {
-		this.y = this.y_start
+		this.y = (this.game.height - this.height) / 2
 	}
 }
