@@ -44,7 +44,6 @@ export default class Player {
 		const moveY = this.game.height * percent
 		const height = (this.game.height - this.height)
 		this.positionYPercentage = this.y / height
-		console.log(this.positionYPercentage)
 
 		if (keys[this.key_go_up])
 			this.y = height * this.positionYPercentage - moveY // this.y -= moveY

@@ -127,8 +127,6 @@ class Game_Pong {
 
 	centerRestart = () => {
 		this.Ball.reset()
-		this.Players.Left.resetPosition()
-		this.Players.Right.resetPosition()
 	}
 
 
