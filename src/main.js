@@ -35,6 +35,10 @@ class Game_Pong {
 		this.initializeGameState()
 
 		this.gameLoop()
+
+		window.addEventListener('resize', () => {
+			this.gameWinningMessage()
+		})
 	}
 
 
@@ -162,7 +166,9 @@ class Game_Pong {
 
 
 	drawMultilineText = (text, lineHeight = 40) => {
-		this.ctx.font = '30px "Press Start 2P", sans-serif'
+		let size = this.game.width / 45
+		if (size < 30) size = 30
+		this.ctx.font = `${size}px "Press Start 2P", sans-serif`
 		this.ctx.textAlign = 'center'
 		const lines = text.split('\n')
 		lines.forEach((line, index) => {
