@@ -40,11 +40,25 @@ export default class Player {
 
 
 	handleControlInput = keys => {
+		const percent = 0.02
+		const moveY = this.game.height * percent
+		const height = (this.game.height - this.height)
+		this.positionYPercentage = this.y / height
+		console.log(this.positionYPercentage)
+
 		if (keys[this.key_go_up])
-			this.y -= this.speed
+			this.y = height * this.positionYPercentage - moveY // this.y -= moveY
 		if (keys[this.key_go_down])
-			this.y += this.speed
-		// return false
+			this.y = height * this.positionYPercentage + moveY
+
+		this.limitInsideCanvas()
+	}
+
+
+	limitInsideCanvas = () => {
+		const maxY = this.game.height - this.height
+		if (this.y < 0) this.y = 0
+		if (this.y > maxY) this.y = maxY
 	}
 
 

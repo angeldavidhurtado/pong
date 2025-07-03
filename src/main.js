@@ -54,6 +54,7 @@ class Game_Pong {
 			const isLeft = x < this.game.width / 2
 			const player = isLeft ? this.Players.Left : this.Players.Right
 			player.y = y - player.height / 2
+			player.limitInsideCanvas()
 		}
 	}
 

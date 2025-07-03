@@ -52,8 +52,7 @@ export default class Scoreboard {
 
 	render = () => {
 		let size = this.game.width / 45
-		if (size < 30)
-			size = 30
+		if (size < 30) size = 30
 		this.ctx.font = `${size}px "Press Start 2P", sans-serif`
 		// this.ctx.fillText(this.player_left.score, this.player_left_x, this.y)
 		this.ctx.fillText(this.player_left.score, this.player_left_x, size * 3)
