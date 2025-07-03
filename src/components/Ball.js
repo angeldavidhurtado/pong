@@ -1,9 +1,9 @@
 export default class Ball {
-	constructor(game, ctx, width, height, collisions) {
+	constructor(game, ctx, collisions) {
 		this.game = game
 		this.ctx = ctx
-		this.width = width
-		this.height = height
+		this.width = this.game.width / 90
+		this.height = this.width
 		this.x = this.game.width / 2 - this.width / 2
 		this.y = this.game.height / 2 - this.height / 2
 		window.innerWidth / 80
@@ -17,14 +17,16 @@ export default class Ball {
 		this.PlayerLeft = collisions.Left
 		this.PlayerRight = collisions.Right
 
-		/*
 		window.addEventListener('resize', () => {
+			this.width = this.game.width / 90
+			this.height = this.width
+			/*
 			this.dividendSpeed = this.initialDividendSpeed
 			this.speed = window.innerWidth / this.dividendSpeed
 			this.speedX = this.speedX > 0 ? this.speed : -this.speed
 			this.speedY = this.speed
+			*/
 		})
-		*/
 	}
 
 

@@ -77,7 +77,7 @@ class Game_Pong {
 		}
 
 		// Create ball
-		this.Ball = new Ball(this.game, this.ctx, 10, 10, this.Players)
+		this.Ball = new Ball(this.game, this.ctx, this.Players)
 
 		// Create scoreboard
 		this.Scoreboard = new Scoreboard(this.game, this.ctx, this.Players.Left, this.Players.Right)
