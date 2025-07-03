@@ -10,8 +10,12 @@ export default class Player {
 		this.y = this.y_start
 		this.key_go_up = key_go_up
 		this.key_go_down = key_go_down
-		this.speed = speed
+		this.speed = this.game.height / 50
 		this.score = 0
+
+		document.addEventListener('resize', () => {
+			this.speed = this.game.height / 50
+		})
 	}
 
 

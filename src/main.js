@@ -20,10 +20,37 @@ class Game_Pong {
 			this.renderGameState()
 		})
 
+		this.game.addEventListener(
+			'touchstart',
+			this.handleTouch,
+			{ passive: false }
+		)
+		this.game.addEventListener(
+			'touchmove',
+			this.handleTouch,
+			{ passive: false }
+		)
+
 		this.KeysPressed = {}
 		this.initializeGameState()
 
 		this.gameLoop()
+	}
+
+
+	handleTouch = e => {
+		e.preventDefault()
+
+		const rect = this.game.getBoundingClientRect()
+
+		for (let i = 0; i < e.touches.length; i++) {
+			const touch = e.touches[i]
+			const x = touch.clientX - rect.left
+			const y = touch.clientY - rect.top
+			const isLeft = x < this.game.width / 2
+			const player = isLeft ? this.Players.Left : this.Players.Right
+			player.y = y - player.height / 2
+		}
 	}
 
 
