@@ -3,7 +3,7 @@ export default class Player {
 		this.game = game
 		this.ctx = ctx
 		this.width = Math.ceil(window.innerWidth / 80)
-		this.height = 100
+		this.height = window.innerHeight / 6
 		this.padding = this.width * 3
 
 		this.side = {
@@ -25,6 +25,7 @@ export default class Player {
 		window.addEventListener('resize', () => {
 			this.speed = this.game.height / 70
 			this.width = Math.ceil(window.innerWidth / 80)
+			this.height = window.innerHeight / 6
 
 			this.padding = this.width * 3
 			this.side = {
