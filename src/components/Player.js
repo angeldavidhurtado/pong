@@ -2,7 +2,7 @@ export default class Player {
 	constructor(game, ctx, x, y, key_go_up, key_go_down, speed) {
 		this.game = game
 		this.ctx = ctx
-		this.width = 12
+		this.width = Math.ceil(window.innerWidth / 80)
 		this.height = 100
 		this.initial_y = y
 		this.y_start = y - this.height / 2
@@ -13,8 +13,9 @@ export default class Player {
 		this.speed = this.game.height / 50
 		this.score = 0
 
-		document.addEventListener('resize', () => {
-			this.speed = this.game.height / 50
+		window.addEventListener('resize', () => {
+			this.speed = this.game.height / 70
+			this.width = Math.ceil(window.innerWidth / 80)
 		})
 	}
 

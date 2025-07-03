@@ -6,7 +6,7 @@ export default class Ball {
 		this.height = height
 		this.x = this.game.width / 2 - this.width / 2
 		this.y = this.game.height / 2 - this.height / 2
-
+		window.innerWidth / 80
 		this.initialDividendSpeed = 255
 		this.initialSpeed = window.innerWidth / this.initialDividendSpeed
 		this.dividendSpeed = this.initialDividendSpeed
@@ -16,6 +16,15 @@ export default class Ball {
 
 		this.PlayerLeft = collisions.Left
 		this.PlayerRight = collisions.Right
+
+		/*
+		window.addEventListener('resize', () => {
+			this.dividendSpeed = this.initialDividendSpeed
+			this.speed = window.innerWidth / this.dividendSpeed
+			this.speedX = this.speedX > 0 ? this.speed : -this.speed
+			this.speedY = this.speed
+		})
+		*/
 	}
 
 
@@ -76,7 +85,7 @@ export default class Ball {
 	resetSpeed = () => {
 		this.dividendSpeed = this.initialDividendSpeed
 		this.speed = window.innerWidth / this.dividendSpeed
-		this.speedX = this.speed
+		this.speedX = this.speedX > 0 ? -this.speed : this.speed
 		this.speedY = this.speed
 	}
 
@@ -84,6 +93,5 @@ export default class Ball {
 	reset = () => {
 		this.x = this.game.width / 2 - this.width / 2
 		this.y = this.game.height / 2 - this.height / 2
-		this.speedX *= -1
 	}
 }
