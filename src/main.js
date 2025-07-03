@@ -71,11 +71,9 @@ class Game_Pong {
 		})
 
 		// Create the players
-		const Y = this.game.height / 2
-		const speed = 10
 		this.Players = {
-			Left: new Player(this.game, this.ctx, 20, Y, 'KeyW', 'KeyS', speed),
-			Right: new Player(this.game, this.ctx, this.game.width-32, Y, 'ArrowUp', 'ArrowDown', speed)
+			Left: new Player(this.game, this.ctx, 'left', 'KeyW', 'KeyS'),
+			Right: new Player(this.game, this.ctx, 'right', 'ArrowUp', 'ArrowDown')
 		}
 
 		// Create ball
