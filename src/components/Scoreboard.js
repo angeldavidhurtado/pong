@@ -7,7 +7,7 @@ export default class Scoreboard {
 
 		this.game = game
 		this.ctx = context
-		this.ctx.font = '30px "Press Start 2P", sans-serif';
+		this.ctx.font = `${this.game.width / 45}px "Press Start 2P", sans-serif`
 		this.y = 80
 
 		window.addEventListener('resize', this.onResize)
@@ -15,7 +15,7 @@ export default class Scoreboard {
 
 
 	onResize = () => {
-		this.ctx.font = '30px "Press Start 2P", sans-serif'
+		this.ctx.font = `${this.game.width / 45}px "Press Start 2P", sans-serif`
 		this.calculateCoordinateXMarkers()
 	}
 
@@ -51,9 +51,14 @@ export default class Scoreboard {
 
 
 	render = () => {
-		this.ctx.font = '30px "Press Start 2P", sans-serif'
-		this.ctx.fillText(this.player_left.score, this.player_left_x, this.y)
-		this.ctx.fillText(this.player_right.score, this.player_right_x, this.y)
+		let size = this.game.width / 45
+		if (size < 30)
+			size = 30
+		this.ctx.font = `${size}px "Press Start 2P", sans-serif`
+		// this.ctx.fillText(this.player_left.score, this.player_left_x, this.y)
+		this.ctx.fillText(this.player_left.score, this.player_left_x, size * 3)
+		// this.ctx.fillText(this.player_right.score, this.player_right_x, this.y)
+		this.ctx.fillText(this.player_right.score, this.player_right_x, size * 3)
 	}
 }
 
