@@ -22,6 +22,7 @@ export default class Player {
 		this.key_go_down = key_go_down
 		this.speed = this.game.height / 50
 		this.score = 0
+		this.positionYPercentage = this.y / (this.game.height - this.height)
 
 		window.addEventListener('resize', () => {
 			this.speed = this.game.height / 70
@@ -35,6 +36,10 @@ export default class Player {
 				'right': this.game.width - this.width - this.padding
 			}
 			this.x = this.side[side]
+
+			const height = this.game.height
+			this.y = (height - this.height) * this.positionYPercentage
+			// this.positionYPercentage = this.y / (this.game.height - this.height)
 		})
 	}
 
@@ -51,6 +56,7 @@ export default class Player {
 			this.y = height * this.positionYPercentage + moveY
 
 		this.limitInsideCanvas()
+		this.positionYPercentage = this.y / height
 	}
 
 
