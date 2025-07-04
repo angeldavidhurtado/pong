@@ -26,6 +26,9 @@ export default class Ball {
 			this.speed = window.innerWidth / this.dividendSpeed
 			this.speedX = this.speedX > 0 ? this.speed : -this.speed
 			this.speedY = this.speedY > 0 ? this.speed : -this.speed
+
+			this.x = this.game.width * this.xPercentage
+			this.y = this.game.height * this.yPercentage
 		})
 	}
 
@@ -66,6 +69,9 @@ export default class Ball {
 						this.speedX = -this.speed
 					}
 		}
+
+		this.xPercentage = this.x / this.game.width
+		this.yPercentage = this.y / this.game.height
 
 		if (this.x + this.width < 0) {
 			this.resetSpeed()
