@@ -70,6 +70,7 @@ export default class Ball {
 						this.sounds[this.sound].currentTime = 0
 						this.sounds[this.sound].play()
 						this.sound = this.sound == 'ping' ? 'pong' : 'ping'
+						console.log(this.sound)
 					}
 		} else if (this.x + this.width >= this.PlayerRight.x - marginColition) {
 			// collision with player on the Right
@@ -81,6 +82,7 @@ export default class Ball {
 						this.sounds.ping.currentTime = 0
 						this.sounds.ping.play()
 						this.sound = this.sound == 'ping' ? 'pong' : 'ping'
+						console.log(this.sound)
 					}
 		}
 
