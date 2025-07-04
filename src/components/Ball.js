@@ -48,23 +48,25 @@ export default class Ball {
 		this.x += this.speedX
 		this.y += this.speedY
 
+		const marginColition = this.PlayerLeft.width * 0.3
+
 		if (this.y <= 0)
 			this.speedY *= -1 // bounce down
 		else if (this.y + this.height >= this.game.height)
 			this.speedY *= -1 // bounce up
-		else if (this.x <= this.PlayerLeft.x + this.PlayerLeft.width) {
+		else if (this.x <= this.PlayerLeft.x + this.PlayerLeft.width + marginColition) {
 			// collision with player on the left
-			if (!(this.x < this.PlayerLeft.x))
-				if (this.y + this.height >= this.PlayerLeft.y)
-					if (this.y <= this.PlayerLeft.y + this.PlayerLeft.height) {
+			if (!(this.x <= this.PlayerLeft.x - marginColition))
+				if (this.y + this.height >= this.PlayerLeft.y - marginColition)
+					if (this.y <= this.PlayerLeft.y + this.PlayerLeft.height + marginColition) {
 						this.increaseSpeed()
 						this.speedX = this.speed
 					}
-		} else if (this.x + this.width >= this.PlayerRight.x) {
+		} else if (this.x + this.width >= this.PlayerRight.x - marginColition) {
 			// collision with player on the Right
-			if (!(this.x + this.width > this.PlayerRight.x + this.PlayerRight.width))
-				if (this.y + this.height >= this.PlayerRight.y)
-					if (this.y <= this.PlayerRight.y + this.PlayerRight.height) {
+			if (!(this.x + this.width > this.PlayerRight.x + this.PlayerRight.width + marginColition))
+				if (this.y + this.height >= this.PlayerRight.y - marginColition)
+					if (this.y <= this.PlayerRight.y + this.PlayerRight.height + marginColition) {
 						this.increaseSpeed()
 						this.speedX = -this.speed
 					}
