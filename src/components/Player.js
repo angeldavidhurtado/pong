@@ -3,6 +3,7 @@ export default class Player {
 		this.game = game
 		this.ctx = ctx
 		this.width = Math.ceil(window.innerWidth / 80)
+		if (this.width < 10) this.width = 10
 		this.height = window.innerHeight / 6
 		if (this.height < 100) this.height = 100
 		this.padding = this.width * 3

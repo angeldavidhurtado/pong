@@ -7,6 +7,7 @@ class Game_Pong {
 	constructor(game) {
 		this.game = game
 		this.ctx = this.game.getContext('2d')
+		this.showWinner = false
 
 		// Canvas size and event to adjust its size
 
@@ -104,6 +105,8 @@ class Game_Pong {
 
 
 	updateGameState = () => {
+		if (this.showWinner) return
+
 		const goal = this.Ball.move()
 		if (!goal)
 			return
@@ -119,10 +122,33 @@ class Game_Pong {
 		this.Scoreboard.updateScoreboard()
 		if (!(this.Players.Left.score == 3 || this.Players.Right.score == 3))
 			this.centerRestart()
+
+		if (this.Players.Left.score == 3 || this.Players.Right.score == 3) {
+			this.showWinner = true
+			setTimeout(() => {
+				this.showWinner = false
+				this.resetGame()
+			}, 5000)
+		}
+	}
+
+
+	resetGame = () => {
+		this.centerRestart()
+		this.Players.Left.score = 0
+		this.Players.Right.score = 0
 	}
 
 
 	sleep = () => new Promise(res => setTimeout(res, 5000))
+
+
+	gameWinningMessage = () => {
+		if (this.Players.Left.score == 3)
+			this.drawMultilineText('Ganador\nJugador de\nla Izquierda')
+		else if (this.Players.Right.score == 3)
+			this.drawMultilineText('Ganador\nJugador de\nla Derecha')
+	}
 
 
 	centerRestart = () => {
@@ -132,7 +158,8 @@ class Game_Pong {
 
 	renderGameState = () => {
 		this.ctx.clearRect(0, 0, this.game.width, this.game.height);
-
+		if (this.showWinner)
+			this.gameWinningMessage()
 		this.Players.Left.render()
 		this.Players.Right.render()
 		this.Ball.render()
@@ -140,27 +167,11 @@ class Game_Pong {
 	}
 
 
-	gameLoop = async () => {
+	gameLoop = () => {
 		this.handleInput() // Capturar la entrada del usuario
 		this.updateGameState() // Actualizar el estado del juego
 		this.renderGameState() // Renderizar el estado del juego
-		if (this.Players.Left.score == 3 || this.Players.Right.score == 3) {
-			this.gameWinningMessage()
-			await this.sleep()
-			this.centerRestart()
-			this.Players.Left.score = 0
-			this.Players.Right.score = 0
-			this.renderGameState()
-		}
 		requestAnimationFrame(this.gameLoop)
-	}
-
-
-	gameWinningMessage = () => {
-		if (this.Players.Left.score == 3)
-			this.drawMultilineText('Ganador\nJugador de\nla Izquierda')
-		else if (this.Players.Right.score == 3)
-			this.drawMultilineText('Ganador\nJugador de\nla Derecha')
 	}
 
 
