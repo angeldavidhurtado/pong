@@ -9,6 +9,14 @@ class Game_Pong {
 		this.ctx = this.game.getContext('2d')
 		this.showWinner = false
 
+		this.colors = [
+			'#fff', // white
+			'#00ff00', // green
+			'#00ffff', // cyan
+			'#ffff00' // yellow
+		]
+		this.iColor = 0
+
 		// Canvas size and event to adjust its size
 
 		this.adjustGameSize()
@@ -61,7 +69,7 @@ class Game_Pong {
 
 
 	configCtx = () => {
-		this.ctx.fillStyle = '#fff'
+		this.ctx.fillStyle = this.colors[this.iColor]
 	}
 
 
@@ -134,6 +142,11 @@ class Game_Pong {
 
 
 	resetGame = () => {
+		this.iColor++
+		if (this.iColor == this.colors.length)
+			this.iColor = 0
+		this.ctx.fillStyle = this.colors[this.iColor]
+
 		this.centerRestart()
 		this.Players.Left.score = 0
 		this.Players.Right.score = 0
@@ -175,9 +188,10 @@ class Game_Pong {
 	}
 
 
-	drawMultilineText = (text, lineHeight = 40) => {
-		let size = this.game.width / 45
+	drawMultilineText = text => {
+		let size = Math.ceil(this.game.width / 45)
 		if (size < 30) size = 30
+		const lineHeight = Math.ceil(size * 1.33)
 		this.ctx.font = `${size}px "Press Start 2P", sans-serif`
 		this.ctx.textAlign = 'center'
 		const lines = text.split('\n')
