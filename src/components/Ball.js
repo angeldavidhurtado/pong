@@ -3,6 +3,7 @@ export default class Ball {
 		this.game = game
 		this.ctx = ctx
 		this.width = this.game.width / 90
+		if (this.width < 10) this.width = 10
 		this.height = this.width
 		this.x = this.game.width / 2 - this.width / 2
 		this.y = this.game.height / 2 - this.height / 2
@@ -19,13 +20,12 @@ export default class Ball {
 
 		window.addEventListener('resize', () => {
 			this.width = this.game.width / 90
+			if (this.width < 10) this.width = 10
 			this.height = this.width
-			/*
-			this.dividendSpeed = this.initialDividendSpeed
+
 			this.speed = window.innerWidth / this.dividendSpeed
 			this.speedX = this.speedX > 0 ? this.speed : -this.speed
-			this.speedY = this.speed
-			*/
+			this.speedY = this.speedY > 0 ? this.speed : -this.speed
 		})
 	}
 
