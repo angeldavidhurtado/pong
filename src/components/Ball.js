@@ -67,10 +67,7 @@ export default class Ball {
 					if (this.y <= this.PlayerLeft.y + this.PlayerLeft.height + marginColition) {
 						this.increaseSpeed()
 						this.speedX = this.speed
-						this.sounds[this.sound].currentTime = 0
-						this.sounds[this.sound].play()
-						this.sound = this.sound == 'ping' ? 'pong' : 'ping'
-						console.log(this.sound)
+						this.playSound()
 					}
 		} else if (this.x + this.width >= this.PlayerRight.x - marginColition) {
 			// collision with player on the Right
@@ -79,10 +76,7 @@ export default class Ball {
 					if (this.y <= this.PlayerRight.y + this.PlayerRight.height + marginColition) {
 						this.increaseSpeed()
 						this.speedX = -this.speed
-						this.sounds.ping.currentTime = 0
-						this.sounds.ping.play()
-						this.sound = this.sound == 'ping' ? 'pong' : 'ping'
-						console.log(this.sound)
+						this.playSound()
 					}
 		}
 
@@ -96,6 +90,13 @@ export default class Ball {
 			this.resetSpeed()
 			return 'Left'
 		} return
+	}
+
+
+	playSound = () => {
+		this.sounds[this.sound].currentTime = 0
+		this.sounds[this.sound].play()
+		this.sound = this.sound == 'ping' ? 'pong' : 'ping'
 	}
 
 
