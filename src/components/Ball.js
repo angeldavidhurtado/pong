@@ -1,5 +1,11 @@
 export default class Ball {
 	constructor(game, ctx, collisions) {
+		this.sounds = {
+			'ping': new Audio('./assets/sounds/ping.mp3'),
+			'pong': new Audio('./assets/sounds/pong.mp3')
+		}
+		this.sound = 'ping'
+
 		this.game = game
 		this.ctx = ctx
 		this.width = this.game.width / 90
@@ -61,6 +67,9 @@ export default class Ball {
 					if (this.y <= this.PlayerLeft.y + this.PlayerLeft.height + marginColition) {
 						this.increaseSpeed()
 						this.speedX = this.speed
+						this.sounds[this.sound].currentTime = 0
+						this.sounds[this.sound].play()
+						this.sound = this.sound == 'ping' ? 'pong' : 'ping'
 					}
 		} else if (this.x + this.width >= this.PlayerRight.x - marginColition) {
 			// collision with player on the Right
@@ -69,6 +78,9 @@ export default class Ball {
 					if (this.y <= this.PlayerRight.y + this.PlayerRight.height + marginColition) {
 						this.increaseSpeed()
 						this.speedX = -this.speed
+						this.sounds.ping.currentTime = 0
+						this.sounds.ping.play()
+						this.sound = this.sound == 'ping' ? 'pong' : 'ping'
 					}
 		}
 

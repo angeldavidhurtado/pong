@@ -5,6 +5,12 @@ import Scoreboard from './components/Scoreboard.js'
 
 class Game_Pong {
 	constructor(game) {
+		this.sounds = {
+			'point': new Audio('./assets/sounds/point.mp3'),
+			'start': new Audio('./assets/sounds/start.wav'),
+			'winner': new Audio('./assets/sounds/winner.mp3')
+		}
+
 		this.game = game
 		this.ctx = this.game.getContext('2d')
 		this.showWinner = false
@@ -122,9 +128,13 @@ class Game_Pong {
 		switch (goal) {
 			case 'Left':
 				this.Players.Left.score++
+				this.sounds.point.currentTime = 0
+				this.sounds.point.play()
 				break
 			case 'Right':
 				this.Players.Right.score++
+				this.sounds.point.currentTime = 0
+				this.sounds.point.play()
 		}
 
 		this.Scoreboard.updateScoreboard()
@@ -136,6 +146,9 @@ class Game_Pong {
 			setTimeout(() => {
 				this.showWinner = false
 				this.resetGame()
+				this.sounds.start.volume = 0.4
+				this.sounds.start.currentTime = 0
+				this.sounds.start.play()
 			}, 5000)
 		}
 	}
