@@ -110,6 +110,11 @@ class Game_Pong {
 
 		// Create scoreboard
 		this.Scoreboard = new Scoreboard(this.game, this.ctx, this.Players.Left, this.Players.Right)
+		this.gameWon = {
+			'left': 0,
+			'right': 0
+		}
+		this.msgWinner = ''
 		this.Scoreboard.updateScoreboard()
 	}
 
@@ -152,6 +157,15 @@ class Game_Pong {
 
 		if (this.Players.Left.score == 3 || this.Players.Right.score == 3) {
 			this.showWinner = true
+			if (this.Players.Left.score == 3) {
+				this.gameWon.left++
+				this.gameWon = {'left': 1, 'right': 0}
+				this.makeMsgWinner('left')
+			} else if (this.Players.Right.score == 3) {
+				this.gameWon.right++
+				this.gameWon = {'left': 0, 'right': 1}
+				this.makeMsgWinner('right')
+			}
 			setTimeout(() => {
 				this.showWinner = false
 				this.resetGame()
@@ -160,6 +174,38 @@ class Game_Pong {
 				this.sounds.start.play()
 			}, 5000)
 		}
+	}
+
+
+	makeMsgWinner = winner => {
+		let left  = `Izquierda`
+		let right = `Derecha  `
+
+		const lenLeft = String(this.gameWon.left).length
+		const lenRight = String(this.gameWon.right).length
+		const dif = Math.abs(lenLeft - lenRight)
+		const spaces = ' '.repeat(dif + 1)
+		if (lenLeft == lenRight) {
+			left = `${left} ${this.gameWon.left}`
+			right = `${right} ${this.gameWon.right}`
+		} else if (lenLeft > lenRight) {
+			left = `${left} ${this.gameWon.left}`
+			right = `${right}${spaces}${this.gameWon.right}`
+		} else if (lenRight > lenLeft) {
+			left = `${left}${spaces}${this.gameWon.left}`
+			right = `${right} ${this.gameWon.right}`
+		}
+
+		if (winner == 'left') {
+			left  = `★ ${left}`
+		  right = `ㅤ ${right}`
+		} else {
+			left  = `ㅤ ${left}`
+			right = `★ ${right}`
+		}
+
+		this.msgWinner = ` Ganador\n\n${left}\n${right}`
+		console.log(this.msgWinner)
 	}
 
 
@@ -179,10 +225,7 @@ class Game_Pong {
 
 
 	gameWinningMessage = () => {
-		if (this.Players.Left.score == 3)
-			this.drawMultilineText('Ganador\nJugador de\nla Izquierda')
-		else if (this.Players.Right.score == 3)
-			this.drawMultilineText('Ganador\nJugador de\nla Derecha')
+		this.drawMultilineText(this.msgWinner)
 	}
 
 
@@ -221,7 +264,7 @@ class Game_Pong {
 			this.ctx.fillText(
 				line,
 				this.game.width / 2, // x
-				this.game.height / 2 + (index * lineHeight) - 20 // y
+				this.game.height / 2 + (index * lineHeight) - (lineHeight * 1.7) // y
 			)
 		})
 	}
