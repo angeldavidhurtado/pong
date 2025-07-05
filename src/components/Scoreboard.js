@@ -1,15 +1,25 @@
 export default class Scoreboard {
 	constructor(game, context, player_left, player_right) {
+		this.game = game
+		this.ctx = context
+
 		this.player_left = player_left
 		this.player_right = player_right
 		this.points_player_left = 0
 		this.points_player_right = 0
 
-		this.game = game
-		this.ctx = context
-		// this.ctx.font = `${this.game.width / 45}px "Press Start 2P", sans-serif`
 		this.y = 80
 		this.render()
+
+		this.fontSize()
+		window.addEventListener('resize', this.fontSize)
+	}
+
+
+	fontSize = () => {
+		this.size = window.innerWidth / 45
+		if (this.size < 30) this.size = 30
+		this.ctx.font = `${this.size}px "Press Start 2P", sans-serif`
 	}
 
 
@@ -29,7 +39,7 @@ export default class Scoreboard {
 	}
 
 
-	widthCanvasText = (text) => {
+	widthCanvasText = text => {
 		const txt = `${text}` // Texto a medir
 		const metrics = this.ctx.measureText(txt) // Obtener la información de medida del texto
 		const anchoTexto = metrics.width // Obtener el ancho del texto
@@ -44,10 +54,7 @@ export default class Scoreboard {
 
 
 	render = () => {
-		let size = this.game.width / 45
-		if (size < 30) size = 30
-		this.ctx.font = `${size}px "Press Start 2P", sans-serif`
-		this.ctx.fillText(this.player_left.score, this.player_left_x, size * 3)
-		this.ctx.fillText(this.player_right.score, this.player_right_x, size * 3)
+		this.ctx.fillText(this.player_left.score, this.player_left_x, this.size * 3)
+		this.ctx.fillText(this.player_right.score, this.player_right_x, this.size * 3)
 	}
 }

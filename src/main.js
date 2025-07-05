@@ -222,7 +222,7 @@ class Game_Pong {
 
 
 	renderGameState = () => {
-		this.ctx.clearRect(0, 0, this.game.width, this.game.height);
+		this.ctx.clearRect(0, 0, this.game.width, this.game.height)
 		if (this.showWinner)
 			this.gameWinningMessage()
 		this.Players.Left.render()
@@ -233,7 +233,7 @@ class Game_Pong {
 	}
 
 
-	gameLoop = () => {
+	gameLoop = async () => {
 		this.handleInput() // Capturar la entrada del usuario
 		this.updateGameState() // Actualizar el estado del juego
 		this.renderGameState() // Renderizar el estado del juego
@@ -265,6 +265,7 @@ class Game_Pong {
 		this.game.height = window.innerHeight
 		this.ctx.fillStyle = this.colors[this.iColor]
 	}
+
 
 	toggleFullscreen = () => {
 		if (
