@@ -23,17 +23,9 @@ class Game_Pong {
 		]
 		this.iColor = 0
 
-		// Canvas size and event to adjust its size
-
 		this.adjustGameSize()
-		window.addEventListener('resize', () => {
-			this.adjustGameSize()
-			this.Players.Right.x = this.game.width-32
-			// La altura de las paletas deberia ser como un porcentaje de la altura del canvas
-			// La posicion de las paletas deberia ser un porcentaje de la altura del canvas para que al redimencionar siga estando en ese porcentaje
-			// Se puede guardar el valor inicial del camvas para tener contancia de cual era y actualizarlo ya cuando se ejecute el evento de resize
-			this.renderGameState()
-		})
+		this.ctx.fillStyle = this.colors[this.iColor]
+		window.addEventListener('resize', this.adjustGameSize)
 
 		this.game.addEventListener(
 			'touchstart',
@@ -49,16 +41,9 @@ class Game_Pong {
 		this.KeysPressed = {}
 		this.initializeGameState()
 
-		this.gameLoop()
-
-		window.addEventListener('resize', () => {
-			this.gameWinningMessage()
-		})
-
 		// fullscreen
 		const lastTouchTimes = new Map() // id cada dedo
 		const DOUBLE_TAP_THRESHOLD = 300
-
 		this.game.addEventListener('touchstart', event => {
 			for (const touch of event.changedTouches) {
 				const now = Date.now();
@@ -73,6 +58,8 @@ class Game_Pong {
 				)
 			}
 		})
+
+		this.gameLoop()
 	}
 
 
@@ -90,11 +77,6 @@ class Game_Pong {
 			player.y = y - player.height / 2
 			player.limitInsideCanvas()
 		}
-	}
-
-
-	configCtx = () => {
-		this.ctx.fillStyle = this.colors[this.iColor]
 	}
 
 
@@ -125,7 +107,6 @@ class Game_Pong {
 			'right': 0
 		}
 		this.msgWinner = ''
-		this.Scoreboard.updateScoreboard()
 	}
 
 
@@ -161,7 +142,6 @@ class Game_Pong {
 				this.sounds.point.play()
 		}
 
-		this.Scoreboard.updateScoreboard()
 		if (!(this.Players.Left.score == 3 || this.Players.Right.score == 3))
 			this.centerRestart()
 
@@ -248,6 +228,7 @@ class Game_Pong {
 		this.Players.Left.render()
 		this.Players.Right.render()
 		this.Ball.render()
+		this.Scoreboard.updateScoreboard()
 		this.Scoreboard.render()
 	}
 
@@ -282,9 +263,7 @@ class Game_Pong {
 	adjustGameSize = () => {
 		this.game.width = window.innerWidth
 		this.game.height = window.innerHeight
-
-		// This configuration must be done after changing the width of the canvas because changing the width of the canvas resets all the context values such as the fillStyle value, so it must be done after changing the size
-		this.configCtx()
+		this.ctx.fillStyle = this.colors[this.iColor]
 	}
 
 	toggleFullscreen = () => {
@@ -330,10 +309,3 @@ class Game_Pong {
 
 
 const GamePong = new Game_Pong($game)
-
-
-// Nombre_Clase
-// InstanciaClase
-// nombreFuncion
-// nombre_variable
-// NOMBRE_CONSTANTE

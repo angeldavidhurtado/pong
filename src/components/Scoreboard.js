@@ -7,16 +7,9 @@ export default class Scoreboard {
 
 		this.game = game
 		this.ctx = context
-		this.ctx.font = `${this.game.width / 45}px "Press Start 2P", sans-serif`
+		// this.ctx.font = `${this.game.width / 45}px "Press Start 2P", sans-serif`
 		this.y = 80
-
-		window.addEventListener('resize', this.onResize)
-	}
-
-
-	onResize = () => {
-		this.ctx.font = `${this.game.width / 45}px "Press Start 2P", sans-serif`
-		this.calculateCoordinateXMarkers()
+		this.render()
 	}
 
 
@@ -54,16 +47,7 @@ export default class Scoreboard {
 		let size = this.game.width / 45
 		if (size < 30) size = 30
 		this.ctx.font = `${size}px "Press Start 2P", sans-serif`
-		// this.ctx.fillText(this.player_left.score, this.player_left_x, this.y)
 		this.ctx.fillText(this.player_left.score, this.player_left_x, size * 3)
-		// this.ctx.fillText(this.player_right.score, this.player_right_x, this.y)
 		this.ctx.fillText(this.player_right.score, this.player_right_x, size * 3)
 	}
 }
-
-
-// A toda logica
-// A todo herzio
-// Como sea, al final, nosotros, ganamossss!!!!!
-// Siiiiiiiiii
-// Bandera pirata ondeando
