@@ -54,6 +54,15 @@ class Game_Pong {
 		window.addEventListener('resize', () => {
 			this.gameWinningMessage()
 		})
+
+		// fullscreen
+		let lastTouchTime = 0
+		this.game.addEventListener('touchstart', () => {
+			const now = new Date().getTime()
+			if (now - lastTouchTime < 300)
+				this.toggleFullscreen()
+			lastTouchTime = now
+		})
 	}
 
 
@@ -224,6 +233,46 @@ class Game_Pong {
 
 		// This configuration must be done after changing the width of the canvas because changing the width of the canvas resets all the context values such as the fillStyle value, so it must be done after changing the size
 		this.configCtx()
+	}
+
+	toggleFullscreen = () => {
+		if (
+			!document.fullscreenElement &&
+			!document.webkitFullscreenElement &&
+			!document.mozFullScreenElement &&
+			!document.msFullscreenElement
+		) {
+			this.requestFullscreen()
+		} else {
+			this.exitFullscreen()
+		}
+	}
+
+
+	requestFullscreen = () => {
+		const element = this.game
+		if (element.requestFullscreen) {
+			element.requestFullscreen()
+		} else if (element.webkitRequestFullscreen) {
+			element.webkitRequestFullscreen()
+		} else if (element.mozRequestFullScreen) {
+			element.mozRequestFullScreen()
+		} else if (element.msRequestFullscreen) {
+			element.msRequestFullscreen()
+		}
+	}
+
+
+	exitFullscreen = () => {
+		if (document.exitFullscreen) {
+			document.exitFullscreen()
+		} else if (document.webkitExitFullscreen) {
+			document.webkitExitFullscreen()
+		} else if (document.mozCancelFullScreen) {
+			document.mozCancelFullScreen()
+		} else if (document.msExitFullscreen) {
+			document.msExitFullscreen()
+		}
 	}
 }
 
