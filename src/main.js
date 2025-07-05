@@ -169,11 +169,9 @@ class Game_Pong {
 			this.showWinner = true
 			if (this.Players.Left.score == 3) {
 				this.gameWon.left++
-				this.gameWon = {'left': 1, 'right': 0}
 				this.makeMsgWinner('left')
 			} else if (this.Players.Right.score == 3) {
 				this.gameWon.right++
-				this.gameWon = {'left': 0, 'right': 1}
 				this.makeMsgWinner('right')
 			}
 			setTimeout(() => {
@@ -215,7 +213,6 @@ class Game_Pong {
 		}
 
 		this.msgWinner = ` Ganador\n\n${left}\n${right}`
-		console.log(this.msgWinner)
 	}
 
 
