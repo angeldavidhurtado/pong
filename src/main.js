@@ -56,12 +56,22 @@ class Game_Pong {
 		})
 
 		// fullscreen
-		let lastTouchTime = 0
-		this.game.addEventListener('touchstart', () => {
-			const now = new Date().getTime()
-			if (now - lastTouchTime < 300)
-				this.toggleFullscreen()
-			lastTouchTime = now
+		const lastTouchTimes = new Map() // id cada dedo
+		const DOUBLE_TAP_THRESHOLD = 300
+
+		this.game.addEventListener('touchstart', event => {
+			for (const touch of event.changedTouches) {
+				const now = Date.now();
+				const lastTime = lastTouchTimes.get(touch.identifier) || 0
+				if (now - lastTime < DOUBLE_TAP_THRESHOLD)
+					this.toggleFullscreen()
+				lastTouchTimes.set(touch.identifier, now)
+				// Limpiar después de un tiempo para evitar llenar el Map
+				setTimeout(
+					() => lastTouchTimes.delete(touch.identifier),
+					DOUBLE_TAP_THRESHOLD + 100
+				)
+			}
 		})
 	}
 
