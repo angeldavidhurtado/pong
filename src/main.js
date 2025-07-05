@@ -27,16 +27,19 @@ class Game_Pong {
 		this.ctx.fillStyle = this.colors[this.iColor]
 		window.addEventListener('resize', this.adjustGameSize)
 
-		this.game.addEventListener(
-			'touchstart',
-			this.handleTouch,
-			{ passive: false }
-		)
-		this.game.addEventListener(
-			'touchmove',
-			this.handleTouch,
-			{ passive: false }
-		)
+		// touch.identifier
+		this.activeTouches = {
+			left: null,  // touch.identifier
+			right: null  // touch.identifier
+		}
+		this.touchAssignments = {} // touch.identifier → 'left' | 'right'
+		this.game.addEventListener('touchstart', this.handleTouchStart, { passive: false })
+		this.game.addEventListener('touchmove', this.handleTouchMove, { passive: false })
+		this.game.addEventListener('touchend', this.handleTouchEnd)
+		this.game.addEventListener('touchcancel', this.handleTouchEnd)
+
+
+
 
 		this.KeysPressed = {}
 		this.initializeGameState()
@@ -63,19 +66,69 @@ class Game_Pong {
 	}
 
 
-	handleTouch = e => {
+	handleTouchStart = e => {
+		e.preventDefault()
+
+		const rect = this.game.getBoundingClientRect()
+
+		for (let i = 0; i < e.changedTouches.length; i++) {
+			const touch = e.changedTouches[i]
+			const x = touch.clientX - rect.left
+			const id = touch.identifier
+
+			// Determinar lado donde se inició el toque
+			const isLeft = x < this.game.width / 2
+			const side = isLeft ? 'left' : 'right'
+
+			// Solo asignar si ese lado está libre
+			if (this.activeTouches[side] === null) {
+				this.activeTouches[side] = id
+				this.touchAssignments[id] = side
+			}
+		}
+	}
+
+
+	handleTouchMove = e => {
 		e.preventDefault()
 
 		const rect = this.game.getBoundingClientRect()
 
 		for (let i = 0; i < e.touches.length; i++) {
 			const touch = e.touches[i]
+			const id = touch.identifier
 			const x = touch.clientX - rect.left
 			const y = touch.clientY - rect.top
-			const isLeft = x < this.game.width / 2
-			const player = isLeft ? this.Players.Left : this.Players.Right
+			const side = this.touchAssignments[id]
+
+			// Si el dedo no está asignado, ignorar
+			if (!side) continue
+
+			// Verifica si el dedo sigue en su mitad correspondiente
+			const isInCorrectHalf =
+				(side === 'left'  && x <  this.game.width / 2) ||
+				(side === 'right' && x >= this.game.width / 2)
+
+			if (!isInCorrectHalf) continue // No mover paleta si está fuera de su zona
+
+			// Mueve la paleta si el dedo está en su zona
+			const player = side === 'left' ? this.Players.Left : this.Players.Right
 			player.y = y - player.height / 2
 			player.limitInsideCanvas()
+		}
+	}
+
+
+	handleTouchEnd = e => {
+		for (let i = 0; i < e.changedTouches.length; i++) {
+			const touch = e.changedTouches[i]
+			const id = touch.identifier
+			const side = this.touchAssignments[id]
+
+			if (side && this.activeTouches[side] === id) {
+				this.activeTouches[side] = null
+			}
+			delete this.touchAssignments[id]
 		}
 	}
 
