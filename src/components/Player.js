@@ -38,10 +38,6 @@ export default class Player {
 				'right': this.game.width - this.width - this.padding
 			}
 			this.x = this.side[side]
-
-			const height = this.game.height
-			this.y = (height - this.height) * this.positionYPercentage
-			// this.positionYPercentage = this.y / (this.game.height - this.height)
 		})
 	}
 

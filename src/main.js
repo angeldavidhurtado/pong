@@ -263,6 +263,8 @@ class Game_Pong {
 	drawMultilineText = text => {
 		let size = Math.ceil(this.game.width / 45)
 		if (size < 30) size = 30
+		if (this.game.width < 500)
+			size = Math.ceil(this.game.width / 27)
 		const lineHeight = Math.ceil(size * 1.33)
 		this.ctx.font = `${size}px "Press Start 2P", sans-serif`
 		this.ctx.textAlign = 'center'
