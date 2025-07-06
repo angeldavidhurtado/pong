@@ -76,9 +76,4 @@ export default class Player {
 			this.height
 		)
 	}
-
-
-	resetPosition = () => {
-		this.y = (this.game.height - this.height) / 2
-	}
 }

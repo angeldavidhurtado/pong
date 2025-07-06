@@ -7,8 +7,7 @@ class Game_Pong {
 	constructor(game) {
 		this.sounds = {
 			'point': new Audio('./assets/sounds/point.mp3'),
-			'start': new Audio('./assets/sounds/start.wav'),
-			'winner': new Audio('./assets/sounds/winner.mp3')
+			'start': new Audio('./assets/sounds/start.wav')
 		}
 
 		this.game = game
@@ -37,9 +36,6 @@ class Game_Pong {
 		this.game.addEventListener('touchmove', this.handleTouchMove, { passive: false })
 		this.game.addEventListener('touchend', this.handleTouchEnd)
 		this.game.addEventListener('touchcancel', this.handleTouchEnd)
-
-
-
 
 		this.KeysPressed = {}
 		this.initializeGameState()
@@ -88,6 +84,13 @@ class Game_Pong {
 				// Mover inmediatamente la paleta a la posición del dedo
 				const player = side === 'left' ? this.Players.Left : this.Players.Right
 				player.y = y - player.height / 2
+
+				const maxY = this.game.height - player.height
+				if (player.y < 0) player.y = 0
+				if (player.y > maxY) player.y = maxY
+				const height = (this.game.height - player.height)
+				player.positionYPercentage = player.y / height
+
 				player.limitInsideCanvas()
 			}
 		}
@@ -119,6 +122,13 @@ class Game_Pong {
 			// Mueve la paleta si el dedo está en su zona
 			const player = side === 'left' ? this.Players.Left : this.Players.Right
 			player.y = y - player.height / 2
+
+			const maxY = this.game.height - player.height
+			if (player.y < 0) player.y = 0
+			if (player.y > maxY) player.y = maxY
+			const height = (this.game.height - player.height)
+			player.positionYPercentage = player.y / height
+
 			player.limitInsideCanvas()
 		}
 	}
