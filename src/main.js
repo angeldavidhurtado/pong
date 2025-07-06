@@ -74,9 +74,9 @@ class Game_Pong {
 		for (let i = 0; i < e.changedTouches.length; i++) {
 			const touch = e.changedTouches[i]
 			const x = touch.clientX - rect.left
+			const y = touch.clientY - rect.top
 			const id = touch.identifier
 
-			// Determinar lado donde se inició el toque
 			const isLeft = x < this.game.width / 2
 			const side = isLeft ? 'left' : 'right'
 
@@ -84,6 +84,11 @@ class Game_Pong {
 			if (this.activeTouches[side] === null) {
 				this.activeTouches[side] = id
 				this.touchAssignments[id] = side
+
+				// Mover inmediatamente la paleta a la posición del dedo
+				const player = side === 'left' ? this.Players.Left : this.Players.Right
+				player.y = y - player.height / 2
+				player.limitInsideCanvas()
 			}
 		}
 	}
