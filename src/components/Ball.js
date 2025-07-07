@@ -91,10 +91,8 @@ export default class Ball {
 
 
 	move = () => {
-		/*
 		this.x += this.speedX
 		this.y += this.speedY
-		*/
 
 		const marginColition = this.PlayerLeft.width * 0.5
 		const bigMarginColition = this.width
