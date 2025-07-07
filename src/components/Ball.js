@@ -36,6 +36,41 @@ export default class Ball {
 			this.x = this.game.width * this.xPercentage
 			this.y = this.game.height * this.yPercentage
 		})
+
+		document.addEventListener('keydown', e => {
+			const key = e.code
+			const sizeStep = 1
+			switch (key) {
+				case 'KeyI':
+					this.y -= sizeStep
+					break
+				case 'KeyK':
+					this.y += sizeStep
+					break
+				case 'KeyL':
+					this.x += sizeStep
+					break
+				case 'KeyJ':
+					this.x -= sizeStep
+					break
+			}
+
+			const sizeStep2 = 50
+			switch (key) {
+				case 'KeyR':
+					this.y -= sizeStep2
+					break
+				case 'KeyF':
+					this.y += sizeStep2
+					break
+				case 'KeyG':
+					this.x += sizeStep2
+					break
+				case 'KeyD':
+					this.x -= sizeStep2
+					break
+			}
+		})
 	}
 
 
@@ -54,28 +89,29 @@ export default class Ball {
 		this.x += this.speedX
 		this.y += this.speedY
 
-		const marginColition = this.PlayerLeft.width * 0.3
+		const marginColition = this.PlayerLeft.width * 0.5
+		const bigMarginColition = this.width
 
 		if (this.y <= 0)
 			this.speedY *= -1 // bounce down
 		else if (this.y + this.height >= this.game.height)
 			this.speedY *= -1 // bounce up
-		else if (this.x <= this.PlayerLeft.x + this.PlayerLeft.width + marginColition) {
+		else if (this.x < this.PlayerLeft.x + this.PlayerLeft.width + marginColition) {
 			// collision with player on the left
-			if (!(this.x <= this.PlayerLeft.x - marginColition))
-				if (this.y + this.height >= this.PlayerLeft.y - marginColition)
-					if (this.y <= this.PlayerLeft.y + this.PlayerLeft.height + marginColition) {
+			if (this.x + this.width > this.PlayerLeft.x - marginColition)
+				if (this.y + this.height > this.PlayerLeft.y - bigMarginColition)
+					if (this.y < this.PlayerLeft.y + this.PlayerLeft.height + bigMarginColition) {
 						this.increaseSpeed()
 						this.speedX = this.speed
 						this.playSound()
 					}
-		} else if (this.x + this.width >= this.PlayerRight.x - marginColition) {
-			// collision with player on the Right
-			if (!(this.x + this.width > this.PlayerRight.x + this.PlayerRight.width + marginColition))
-				if (this.y + this.height >= this.PlayerRight.y - marginColition)
-					if (this.y <= this.PlayerRight.y + this.PlayerRight.height + marginColition) {
+		} else if (this.x + this.width > this.PlayerRight.x - marginColition) {
+			// collision with player on the left
+			if (this.x < this.PlayerRight.x + this.PlayerRight.width + marginColition)
+				if (this.y + this.height > this.PlayerRight.y - bigMarginColition)
+					if (this.y < this.PlayerRight.y + this.PlayerRight.height + bigMarginColition) {
 						this.increaseSpeed()
-						this.speedX = -this.speed
+						this.speedX = this.speed
 						this.playSound()
 					}
 		}
