@@ -5,6 +5,11 @@ export default class Ball {
 			'pong': new Audio('./assets/sounds/pong.mp3')
 		}
 		this.sound = 'ping'
+		this.enableToRingAgain = true
+		// Solo se debe reproducir el sonido una
+		// única vez mientras la bola está en
+		// colisión con las paletas, a veces se
+		// reproducía hasta 3 veces el sonido
 
 		this.game = game
 		this.ctx = ctx
@@ -86,11 +91,14 @@ export default class Ball {
 
 
 	move = () => {
+		/*
 		this.x += this.speedX
 		this.y += this.speedY
+		*/
 
 		const marginColition = this.PlayerLeft.width * 0.5
 		const bigMarginColition = this.width
+		let colitionPlayer = false
 
 		if (this.y <= 0)
 			this.speedY *= -1 // bounce down
@@ -103,7 +111,11 @@ export default class Ball {
 					if (this.y < this.PlayerLeft.y + this.PlayerLeft.height + bigMarginColition) {
 						this.increaseSpeed()
 						this.speedX = this.speed
-						this.playSound()
+						if (this.enableToRingAgain)
+							this.playSound()
+						colitionPlayer = true
+						this.enableToRingAgain = false
+
 					}
 		} else if (this.x + this.width > this.PlayerRight.x - marginColition) {
 			// collision with player on the left
@@ -112,9 +124,14 @@ export default class Ball {
 					if (this.y < this.PlayerRight.y + this.PlayerRight.height + bigMarginColition) {
 						this.increaseSpeed()
 						this.speedX = -this.speed
-						this.playSound()
+						if (this.enableToRingAgain)
+							this.playSound()
+						colitionPlayer = true
+						this.enableToRingAgain = false
 					}
 		}
+		if (!colitionPlayer)
+			this.enableToRingAgain = true
 
 		this.xPercentage = this.x / this.game.width
 		this.yPercentage = this.y / this.game.height
@@ -137,8 +154,8 @@ export default class Ball {
 
 
 	increaseSpeed = () => {
-		this.dividendSpeed -= 25
-		if (this.dividendSpeed < 80) this.dividendSpeed = 80
+		this.dividendSpeed -= 20
+		if (this.dividendSpeed < 65) this.dividendSpeed = 65
 		this.speed = window.innerWidth / this.dividendSpeed
 	}
 
