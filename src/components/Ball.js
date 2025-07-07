@@ -111,7 +111,7 @@ export default class Ball {
 				if (this.y + this.height > this.PlayerRight.y - bigMarginColition)
 					if (this.y < this.PlayerRight.y + this.PlayerRight.height + bigMarginColition) {
 						this.increaseSpeed()
-						this.speedX = this.speed
+						this.speedX = -this.speed
 						this.playSound()
 					}
 		}
