@@ -101,7 +101,7 @@ export default class Ball {
 		// */
 
 		const marginColition = this.PlayerLeft.width * 0.3
-		const bigMmarginColition = this.PlayerLeft.width * 0.5 // min 0.4
+		const bigMmarginColition = this.PlayerLeft.width
 		let colitionPlayer = false
 
 		if (this.y <= 0)
