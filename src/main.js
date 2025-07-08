@@ -298,7 +298,8 @@ class Game_Pong {
 			this.gameWinningMessage()
 		this.Players.Left.render()
 		this.Players.Right.render()
-		this.Ball.render()
+		if (!this.showWinner)
+			this.Ball.render()
 		this.Scoreboard.updateScoreboard()
 		this.Scoreboard.render()
 	}
