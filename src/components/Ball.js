@@ -42,7 +42,7 @@ export default class Ball {
 			this.y = this.game.height * this.yPercentage
 		})
 
-		/*
+		// /*
 		// test colitions
 		document.addEventListener('keydown', e => {
 			const key = e.code
@@ -62,7 +62,7 @@ export default class Ball {
 					break
 			}
 
-			const sizeStep2 = 50
+			const sizeStep2 = window.innerWidth / 65
 			switch (key) {
 				case 'KeyR':
 					this.y -= sizeStep2
@@ -78,7 +78,7 @@ export default class Ball {
 					break
 			}
 		})
-		*/
+		// */
 	}
 
 
@@ -94,22 +94,23 @@ export default class Ball {
 
 
 	move = () => {
-		// /*
+		/*
 		// test colitions
 		this.x += this.speedX
 		this.y += this.speedY
-		// */
+		*/
 
 		const marginColition = this.PlayerLeft.width * 0.3
+		const bigMmarginColition = this.PlayerLeft.width * 0.4 // max 0.5
 		let colitionPlayer = false
 
 		if (this.y <= 0)
 			this.speedY *= -1 // bounce down
 		else if (this.y + this.height >= this.game.height)
 			this.speedY *= -1 // bounce up
-		else if (this.x < this.PlayerLeft.x + this.PlayerLeft.width /* + marginColition */ ) {
+		else if (this.x < this.PlayerLeft.x + this.PlayerLeft.width) {
 			// collision with player on the left
-			if (this.x + this.width > this.PlayerLeft.x /* - marginColition */ )
+			if (this.x > this.PlayerLeft.x - bigMmarginColition)
 				if (this.y + this.height > this.PlayerLeft.y - marginColition)
 					if (this.y < this.PlayerLeft.y + this.PlayerLeft.height + marginColition) {
 						this.increaseSpeed()
@@ -119,9 +120,9 @@ export default class Ball {
 						colitionPlayer = true
 						this.enableToRingAgain = false
 					}
-		} else if (this.x + this.width > this.PlayerRight.x /* - marginColition */ ) {
+		} else if (this.x + this.width > this.PlayerRight.x) {
 			// collision with player on the left
-			if (this.x < this.PlayerRight.x + this.PlayerRight.width /* + marginColition */ )
+			if (this.x + this.width < this.PlayerRight.x + this.PlayerRight.width + bigMmarginColition)
 				if (this.y + this.height > this.PlayerRight.y - marginColition)
 					if (this.y < this.PlayerRight.y + this.PlayerRight.height + marginColition) {
 						this.increaseSpeed()
