@@ -172,7 +172,9 @@ export default class Ball {
 
 
 	reset = () => {
-		this.x = this.game.width / 2 - this.width / 2
-		this.y = this.game.height / 2 - this.height / 2
+		this.x = window.innerWidth / 2 - this.width / 2
+		this.y = window.innerHeight / 2 - this.height / 2
+		this.xPercentage = this.x / this.game.width
+		this.yPercentage = this.y / this.game.height
 	}
 }

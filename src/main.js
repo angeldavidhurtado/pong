@@ -13,6 +13,7 @@ class Game_Pong {
 		this.game = game
 		this.ctx = this.game.getContext('2d')
 		this.showWinner = false
+		// this.enableToRingAgain = true
 
 		this.colors = [
 			'#fff', // white
@@ -192,7 +193,8 @@ class Game_Pong {
 
 
 	updateGameState = () => {
-		if (this.showWinner) return
+		if (this.showWinner)
+			return
 
 		const goal = this.Ball.move()
 		if (!goal)
@@ -203,15 +205,16 @@ class Game_Pong {
 				this.Players.Left.score++
 				this.sounds.point.currentTime = 0
 				this.sounds.point.play()
+				this.centerRestart()
+				// this.enableToRingAgain = false
 				break
 			case 'Right':
 				this.Players.Right.score++
 				this.sounds.point.currentTime = 0
 				this.sounds.point.play()
+				this.centerRestart()
+				// this.enableToRingAgain = false
 		}
-
-		if (!(this.Players.Left.score == 3 || this.Players.Right.score == 3))
-			this.centerRestart()
 
 		if (this.Players.Left.score == 3 || this.Players.Right.score == 3) {
 			this.showWinner = true
