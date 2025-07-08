@@ -42,7 +42,7 @@ export default class Ball {
 			this.y = this.game.height * this.yPercentage
 		})
 
-		// /*
+		/*
 		// test colitions
 		document.addEventListener('keydown', e => {
 			const key = e.code
@@ -78,7 +78,7 @@ export default class Ball {
 					break
 			}
 		})
-		// */
+		*/
 	}
 
 
@@ -94,11 +94,11 @@ export default class Ball {
 
 
 	move = () => {
-		/*
+		// /*
 		// test colitions
 		this.x += this.speedX
 		this.y += this.speedY
-		*/
+		// */
 
 		const marginColition = this.PlayerLeft.width * 0.3
 		const bigMmarginColition = this.PlayerLeft.width * 0.4 // max 0.5
