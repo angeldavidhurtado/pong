@@ -100,7 +100,7 @@ export default class Ball {
 		this.y += this.speedY
 		// */
 
-		const marginColition = this.PlayerLeft.width * 0.3
+		const marginColition = this.PlayerLeft.width * 0.5
 		const bigMmarginColition = this.PlayerLeft.width
 		let colitionPlayer = false
 
