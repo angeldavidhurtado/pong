@@ -13,7 +13,6 @@ class Game_Pong {
 		this.game = game
 		this.ctx = this.game.getContext('2d')
 		this.showWinner = false
-		// this.enableToRingAgain = true
 
 		this.colors = [
 			'#fff', // white
@@ -206,14 +205,12 @@ class Game_Pong {
 				this.sounds.point.currentTime = 0
 				this.sounds.point.play()
 				this.centerRestart()
-				// this.enableToRingAgain = false
 				break
 			case 'Right':
 				this.Players.Right.score++
 				this.sounds.point.currentTime = 0
 				this.sounds.point.play()
 				this.centerRestart()
-				// this.enableToRingAgain = false
 		}
 
 		if (this.Players.Left.score == 3 || this.Players.Right.score == 3) {
